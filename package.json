@@ -1,0 +1,22 @@
+{
+  "name": "cabanas-v2",
+  "version": "2.0.0",
+  "description": "Cabañas V2 — andamio con modelo de seguridad nuevo",
+  "main": "minify.js",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "node build.js && node unificar.js && node minify.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "html-minifier-terser": "^7.2.0"
+  },
+  "devDependencies": {
+    "acorn": "^8.16.0",
+    "vitest": "^4.1.7"
+  }
+}

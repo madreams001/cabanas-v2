@@ -1,0 +1,39 @@
+name: Deploy dist to Pages
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dist/**'
+      - 'src/**'
+      - 'build.js'
+      - 'unificar.js'
+      - 'minify.js'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+        env:
+          # Secretos del repo (Settings → Secrets → Actions). El token queda
+          # inyectado en el JS servido (igual que V1), pero fuera del repo
+          # y rotable sin tocar código.
+          API_URL: ${{ secrets.V2_API_URL }}
+          WRITE_TOKEN: ${{ secrets.V2_WRITE_TOKEN }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,11 @@
+node_modules/
+config.local.json
+.clasp.json
+index.html
+index.min.html
+minis/
+style.html
+script.html
+index-gas.html
+dist/
+*.log
